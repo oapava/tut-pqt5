@@ -28,10 +28,10 @@ jobs:
       - name: Reemplazar URL en el archivo de enum temporalmente
         run: |
           # Reemplazar la URL de MULTICOUNTRY por la nueva URL proporcionada
-          sed -i "s|MULTICOUNTRY = '.*'|MULTICOUNTRY = '${{ github.event.inputs.url_ambiente }}'|" config.ts
+          sed -i "s|MULTICOUNTRY = '.*'|MULTICOUNTRY = '${{ github.event.inputs.url_ambiente }}'|" config.js
 
       - name: Mostrar archivo modificado
-        run: cat config.ts
+        run: cat config.js
 
       - name: Usar el archivo modificado para crear el ambiente
         run: |
@@ -39,7 +39,7 @@ jobs:
           # Aquí puedes hacer lo que necesites con el archivo modificado
 
       - name: Revertir los cambios en el archivo (no subimos nada)
-        run: git checkout -- config.ts
+        run: git checkout -- config.js
 
       # - name: Mostrar mensaje
       #   run: echo 'Mensaje ingresado 3' ${{ github.event.inputs.mensaje }}
