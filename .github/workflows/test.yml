@@ -1,4 +1,4 @@
-name: Make Environment
+name: Make Environment Web
 
 on:
   push:
@@ -16,4 +16,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Mostrar mensaje
-        run: echo 'Mensaje ingresado 3'
+        run: echo 'Mensaje ingresado 3' ${{ github.event.inputs.mensaje }}
