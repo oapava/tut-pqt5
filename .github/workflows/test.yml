@@ -25,9 +25,10 @@ jobs:
       - name: Chequear el repositorio
         uses: actions/checkout@v3
 
-      - name: Reemplazar URL en el archivo
+      - name: Reemplazar URL en el archivo de enum temporalmente
         run: |
-          sed -i "s|$(sed -n $(( MULTICOUNTRY + 1 ))p config.js)|'${{ github.event.inputs.url_ambiente }}',|" config.js
+          # Reemplazar la URL de MULTICOUNTRY por la nueva URL proporcionada
+          sed -i "s|MULTICOUNTRY = '.*'|MULTICOUNTRY = '${{ github.event.inputs.nueva_url }}'|" path/to/config.ts
 
       - name: Mostrar archivo modificado
         run: cat config.js
