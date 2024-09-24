@@ -7,9 +7,16 @@ on:
   workflow_dispatch:
     inputs:
       mensaje:
-        description: 'Escribe un mensaje'
+        description: 'Ingrese la URL del ambiente back al que necesita apuntar el ambiente web'
         required: true
-        default: 'Hola Mundo'
+        default: 'https://nombre-ambiente.com/'
+      opcion:
+        description: 'Seleccione que tipo de ambiente requiere'
+        required: true
+        type: choice
+        options:
+          - Ambiente de Sandbox Web apuntando al ambiente backend anterior
+          - Ambiente de Producción Web apuntando al ambiente backend anterior
 
 jobs:
   imprimir:
