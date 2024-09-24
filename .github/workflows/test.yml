@@ -6,11 +6,11 @@ on:
       - action-create-environment
   workflow_dispatch:
     inputs:
-      mensaje:
+      env_url:
         description: 'Ingrese la URL del ambiente back al que necesita apuntar el ambiente web'
         required: true
         default: 'https://nombre-ambiente.com/'
-      url_ambiente:
+      env_type:
         description: 'Seleccione que tipo de ambiente requiere'
         required: true
         type: choice
@@ -19,7 +19,8 @@ on:
           - Ambiente de Producción Web apuntando al ambiente backend anterior
 
 jobs:
-  imprimir:
+  capturar_nuevo_ambiente:
+    name: Capturar Nombre y tipo de ambiente
     runs-on: ubuntu-latest
     steps:
       - name: Chequear el repositorio
@@ -28,7 +29,7 @@ jobs:
       - name: Reemplazar URL en el archivo de enum temporalmente
         run: |
           # Reemplazar la URL de MULTICOUNTRY por la nueva URL proporcionada
-          sed -i "s|MULTICOUNTRY = '.*'|MULTICOUNTRY = '${{ github.event.inputs.url_ambiente }}'|" config.js
+          sed -i "s|MULTICOUNTRY = '.*'|MULTICOUNTRY = '${{ github.event.inputs.env_url }}'|" config.js
 
       - name: Mostrar archivo modificado
         run: cat config.js
@@ -40,6 +41,3 @@ jobs:
 
       - name: Revertir los cambios en el archivo (no subimos nada)
         run: git checkout -- config.js
-
-      # - name: Mostrar mensaje
-      #   run: echo 'Mensaje ingresado 3' ${{ github.event.inputs.mensaje }}
