@@ -10,7 +10,7 @@ on:
         description: 'Ingrese la URL del ambiente back al que necesita apuntar el ambiente web'
         required: true
         default: 'https://nombre-ambiente.com/'
-      opcion:
+      url_ambiente:
         description: 'Seleccione que tipo de ambiente requiere'
         required: true
         type: choice
@@ -22,5 +22,31 @@ jobs:
   imprimir:
     runs-on: ubuntu-latest
     steps:
-      - name: Mostrar mensaje
-        run: echo 'Mensaje ingresado 3' ${{ github.event.inputs.mensaje }}
+      - name: Chequear el repositorio
+        uses: actions/checkout@v3
+
+      - name: Reemplazar URL en el archivo
+        run: |
+          sed -i "s|$(sed -n $(( MULTICOUNTRY + 1 ))p config.js)|'${{ github.event.inputs.url_ambiente }}',|" config.js
+
+      - name: Mostrar archivo modificado
+        run: cat config.js
+
+      - name: Configurar git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Hacer commit y push de los cambios
+        run: |
+          git add config.js
+          git commit -m "Actualizar URL en config.js"
+          git push
+
+      - name: Usar el archivo modificado para crear el ambiente
+        run: |
+          echo "Aquí puedes poner los comandos que usen el archivo modificado, como crear el ambiente"
+          # Aquí puedes hacer lo que necesites con el archivo modificado
+
+      - name: Revertir los cambios en el archivo (no subimos nada)
+        run: git checkout -- config.js
