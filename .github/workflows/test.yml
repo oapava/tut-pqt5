@@ -1,0 +1,19 @@
+name: Make Environment
+
+on:
+  push:
+    branches:
+      - action-create-environment
+  workflow_dispatch:
+    inputs:
+      mensaje:
+        description: 'Escribe un mensaje'
+        required: true
+        default: 'Hola Mundo'
+
+jobs:
+  imprimir:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mostrar mensaje
+        run: echo 'Mensaje ingresado 3'
